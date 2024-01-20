@@ -12,8 +12,6 @@ public class Main {
 
         CarGame carGame = new CarGame();
         window.add(carGame);
-        //UI ui = new UI();
-        //window.add(ui);
 
         window.pack();
 

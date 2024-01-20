@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.text.AttributedCharacterIterator;
 
 import static java.lang.System.out;
 
@@ -9,8 +7,6 @@ public class CarGame extends JPanel implements Runnable{
     final int originalTileSize=10;
     final int scale=1;
     final int tileSize = originalTileSize * scale;
-    final int maxScreenCol = 80;
-    final int maxScreenRow = 40;
 
     final int screenWidth = 1660;
     final int screenHeight = 720;
@@ -131,14 +127,6 @@ public class CarGame extends JPanel implements Runnable{
         carX= (int) car.coordination.x;
         carY= (int) car.coordination.y;
 
-
-
-
-
-        //out.println(carX);
-       // out.println(carY);
-
-
     }
 
     public void paintComponent(Graphics g){
@@ -158,6 +146,10 @@ public class CarGame extends JPanel implements Runnable{
     }
 
     public void draw2(Graphics g) {
-        g.drawString(String.valueOf(car.coordination),20, 20);
+        Graphics2D g2 = (Graphics2D) g;
+
+        g2.setColor(Color.black);
+        g2.drawString(String.valueOf(car.getCurrentSpeed()),20, 20);
+        g2.dispose();
     }
 }
