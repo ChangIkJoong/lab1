@@ -2,17 +2,17 @@ import java.awt.*;
 
 public interface CarMethods {
 
-    public int getNrDoors();
+     int getNrDoors();
 
-    public double getEnginePower();
+     double getEnginePower();
 
-    public double getCurrentSpeed();
+     double getCurrentSpeed();
 
-    public Color getColor();
+     Color getColor();
 
-    public void setColor(Color clr);
+     void setColor(Color clr);
 
-    public void startEngine();
+     void startEngine();
 
     void stopEngine();
     void incrementSpeed(double amount);
