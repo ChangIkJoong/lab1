@@ -151,7 +151,7 @@ public class CarGame extends JPanel implements Runnable{
     public void draw(Graphics g) {
         Graphics2D g2 = (Graphics2D)g;
 
-        g2.setColor(Color.GRAY);
+        g2.setColor(car.getColor());
         g2.fillRect(carX, carY, tileSize,tileSize);
 
         g2.dispose();
