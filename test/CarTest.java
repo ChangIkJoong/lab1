@@ -13,7 +13,7 @@ public class CarTest {
     static Volvo240 volvo;
 
     @Before
-    public void init() {
+    public void initializer() {
         saab = new Saab95();
         volvo = new Volvo240();
     }
