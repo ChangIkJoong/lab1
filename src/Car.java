@@ -16,7 +16,7 @@ public abstract class Car implements Movable {
         return nrDoors;
     }
 
-    protected double getEnginePower() {
+    public double getEnginePower() {
         return enginePower;
     }
 
