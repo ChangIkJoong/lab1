@@ -22,7 +22,7 @@ public class CarTest {
     @Test
     public void testGas () {
 
-        saab.gas(0.1);
+        saab.gas(1);
         assertTrue(saab.getCurrentSpeed()>0);
     }
 
@@ -31,6 +31,7 @@ public class CarTest {
     public void testBrake () {
 
         saab.currentSpeed=1;
+        assertTrue(saab.getCurrentSpeed() >0);
 
         saab.brake(1);
         assertTrue(saab.getCurrentSpeed() ==0);
@@ -42,7 +43,7 @@ public class CarTest {
     @Test
     public void testMaxSpeed () {
         saab.currentSpeed=saab.getEnginePower();
-        saab.incrementSpeed(10);
+        saab.gas(1);
 
         assertTrue(saab.getCurrentSpeed()==saab.getEnginePower());
 
@@ -52,7 +53,7 @@ public class CarTest {
     @Test
     public void testMinSpeed () {
         saab.currentSpeed=0;
-        saab.decrementSpeed(10);
+        saab.brake(1);
 
         assertEquals(0, saab.getCurrentSpeed(), 0.0);
     }
@@ -83,7 +84,7 @@ public class CarTest {
     @Test
     public void testMove () {
         saab.coordination=new Point2D.Double(0,0);
-        saab.incrementSpeed(saab.getEnginePower());
+        saab.currentSpeed=saab.getEnginePower();
 
         saab.move();
         saab.turnRight();
