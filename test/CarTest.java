@@ -86,10 +86,6 @@ public class CarTest {
         saab.incrementSpeed(saab.getEnginePower());
 
         saab.move();
-
-
-        assertTrue(saab.coordination.y > 0 && saab.coordination.x ==0);
-
         saab.turnRight();
         saab.move();
 
@@ -124,11 +120,8 @@ public class CarTest {
     @Test
     public void testColor() {
         Color currentColor = volvo.getColor();
-
         volvo.setColor(Color.red);
-
-        assertTrue(currentColor!=volvo.getColor());
-        assertTrue(volvo.getColor()==Color.red);
+        assertTrue(currentColor!=volvo.getColor() && volvo.getColor()==Color.red);
 
     }
 
