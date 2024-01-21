@@ -34,7 +34,7 @@ public class CarTest {
         assertTrue(saab.getCurrentSpeed() >0);
 
         saab.brake(1);
-        assertTrue(saab.getCurrentSpeed() ==0);
+        assertEquals(0, saab.getCurrentSpeed(), 0.0);
 
 
     }
@@ -45,15 +45,15 @@ public class CarTest {
         saab.currentSpeed=saab.getEnginePower();
         saab.gas(1);
 
-        assertTrue(saab.getCurrentSpeed()==saab.getEnginePower());
+        assertEquals(saab.getCurrentSpeed(), saab.getEnginePower(), 0.0);
 
     }
 
 
     @Test
     public void testMinSpeed () {
-        saab.currentSpeed=0;
-        saab.brake(1);
+        volvo.currentSpeed=0;
+        volvo.brake(1);
 
         assertEquals(0, saab.getCurrentSpeed(), 0.0);
     }
@@ -125,6 +125,12 @@ public class CarTest {
         assertTrue(currentColor!=volvo.getColor() && volvo.getColor()==Color.red);
 
     }
+    @Test
+    public void testDoors() {
+        assertTrue(saab.getNrDoors()==2 && volvo.getNrDoors()==4);
+    }
+
+
 
 
 }

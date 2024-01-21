@@ -1,5 +1,4 @@
 import java.awt.*;
-import java.util.*;
 
 public class Volvo240 extends Car{
 
@@ -10,7 +9,6 @@ public class Volvo240 extends Car{
         setColor(Color.black);
         enginePower = 100;
         modelName = "Volvo240";
-        stopEngine();
     }
     @Override
     protected double speedFactor(){
