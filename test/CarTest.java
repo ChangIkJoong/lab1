@@ -18,7 +18,18 @@ public class CarTest {
         volvo = new Volvo240();
     }
 
+    @Test
+    public void testStart () {
+        volvo.startEngine();
+        assertTrue(volvo.getCurrentSpeed()>0);
+    }
 
+    @Test
+    public void testStop () {
+        volvo.currentSpeed=volvo.getEnginePower();
+        volvo.stopEngine();
+        assertEquals(0, volvo.getCurrentSpeed(), 0.0);
+    }
     @Test
     public void testGas () {
 
