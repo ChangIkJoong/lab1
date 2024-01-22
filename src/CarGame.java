@@ -142,7 +142,7 @@ public class CarGame extends JPanel implements Runnable{
         g2.setColor(car.getColor());
         g2.fillRect(carX, carY, tileSize,tileSize);
 
-        g2.dispose();
+        //g2.dispose();
     }
 
     public void draw2(Graphics g) {
@@ -150,6 +150,6 @@ public class CarGame extends JPanel implements Runnable{
 
         g2.setColor(Color.black);
         g2.drawString(String.valueOf(car.getCurrentSpeed()),20, 20);
-        g2.dispose();
+        //g2.dispose();
     }
 }

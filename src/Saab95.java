@@ -6,6 +6,7 @@ public class Saab95 extends Car {
 
     
     public Saab95(){
+
         nrDoors = 2;
         setColor(Color.red);
         enginePower = 125;
