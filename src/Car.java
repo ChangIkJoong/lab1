@@ -12,6 +12,15 @@ public abstract class Car implements Movable {
 
     public Point orientation = new Point(0, 1);
 
+    protected double turnAmount = 0.5;
+
+    public Car (String model, int nrDoors, Color color, double enginePower) {
+        this.modelName = model;
+        this.nrDoors = nrDoors;
+        this.color=color;
+        this.enginePower = enginePower;
+    }
+
     public int getNrDoors() {
         return nrDoors;
     }
@@ -48,10 +57,10 @@ public abstract class Car implements Movable {
 
     //TODO uppgift 4 Sanity Checks
 
-    private void incrementSpeed(double amount){
+    protected void incrementSpeed(double amount){
         currentSpeed = speedValidation(getCurrentSpeed() + speedFactor() * amount);
     }
-    private void decrementSpeed(double amount){
+    protected void decrementSpeed(double amount){
         currentSpeed = speedValidation(getCurrentSpeed() - speedFactor() * amount);
     }
 
@@ -66,7 +75,7 @@ public abstract class Car implements Movable {
         return Math.max(0, Math.min(amount, enginePower));
     }
 
-    private double speedInterval(double amount) {
+    double speedInterval(double amount) {
         return Math.max(0, Math.min(1, amount));
     }
 
@@ -97,7 +106,6 @@ public abstract class Car implements Movable {
             orientation.y = (int) -orientation.getX();
             orientation.x=0;
         }
-
     }
 
     public void turnRight() {
@@ -112,6 +120,17 @@ public abstract class Car implements Movable {
     }
 
 
+
+    //TODO LAB 2, för att implementera allt till applikationen med keybindings...
+    public void increasePlatformAngle() {
+    }
+
+    public void decreasePlatformAngle() {
+    }
+
+    public int getPlatformAngle() {
+        return 0;
+    }
 }
 
 
