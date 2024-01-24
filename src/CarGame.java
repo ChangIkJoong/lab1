@@ -1,5 +1,8 @@
+import org.hamcrest.core.IsInstanceOf;
+import java.util.Stack;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 
 import static java.lang.System.out;
 
@@ -22,8 +25,12 @@ public class CarGame extends JPanel implements Runnable{
     int carX=screenWidth/2;
     int carY=screenHeight/2;
 
+    double rotationV = Math.toRadians(90);
 
-    Car car = new Scania();
+    int carLoadOffset=0;
+
+    //TODO CAR ATTRIBUTE
+    Car car = new CarCarrier();
 
     public CarGame () {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -88,6 +95,7 @@ public class CarGame extends JPanel implements Runnable{
 
         else if(keyH.leftPressed) {
             car.turnLeft();
+            rotationV-=Math.toRadians(90);
 
             out.println("left");
             out.println(car.orientation);
@@ -95,6 +103,7 @@ public class CarGame extends JPanel implements Runnable{
         }
         else if(keyH.rightPressed) {
             car.turnRight();
+            rotationV+=Math.toRadians(90);
 
             out.println("right");
             out.println(car.orientation);
@@ -107,6 +116,30 @@ public class CarGame extends JPanel implements Runnable{
 
         else if(keyH.aPressed) {
             car.decreasePlatformAngle();
+        }
+
+
+        else if(keyH.nPressed && car instanceof CarCarrier) {
+            car.addCar(new Saab95());
+            keyH.nPressed=false;
+            carLoadOffset++;
+            if(carLoadOffset>=car.getLoadSize()) {
+                carLoadOffset=car.getLoadSize();
+            }
+        }
+
+        else if(keyH.mPressed && car instanceof CarCarrier) {
+            car.removeCar();
+            keyH.mPressed=false;
+            carLoadOffset--;
+            if(carLoadOffset< 0 ) {
+                carLoadOffset=0;
+            }
+        }
+
+        else if(keyH.bPressed && car instanceof CarCarrier) {
+            car.getLoadPos();
+            keyH.bPressed=false;
         }
 
 
@@ -136,16 +169,42 @@ public class CarGame extends JPanel implements Runnable{
         super.paintComponent(g);
         drawCar(g);
         drawSpeed(g);
+        drawPosition(g);
         if(car.getPlatformAngle()!=0) {
             drawPlatform(g);
+        }
+        if(car.getLoadSize() != 0) {
+            drawLoadSize(g);
+            drawLoad(g);
         }
     }
 
     public void drawCar(Graphics g) {
         Graphics2D g2 = (Graphics2D)g;
+        Point carBodySize=new Point(20, 10);
+        Point carWheelSize=new Point(5, 3);
 
+        AffineTransform transform = new AffineTransform();
+        AffineTransform oldTransform = g2.getTransform();
+
+        transform.rotate(rotationV, carX+(carBodySize.x), carY+(carBodySize.y/2));
+
+        g2.setTransform(transform);
+
+        // body
         g2.setColor(car.getColor());
-        g2.fillRect(carX, carY, tileSize,tileSize);
+        g2.fillRect(carX, carY, carBodySize.x,carBodySize.y);
+
+        // wheels
+        g2.setColor(Color.GRAY);
+        g2.fillRect(carX, carY + carBodySize.y , carWheelSize.x, carWheelSize.y); // Back right wheel
+        g2.fillRect(carX, carY- carWheelSize.y, carWheelSize.x, carWheelSize.y); // back left wheel
+
+        g2.fillRect(carX + carBodySize.x - carWheelSize.x, carY + carBodySize.y , carWheelSize.x, carWheelSize.y); // Front right wheel
+        g2.fillRect(carX + carBodySize.x - carWheelSize.x, carY - carWheelSize.y, carWheelSize.x, carWheelSize.y); // Front left wheel
+
+        g2.setTransform(oldTransform);
+
 
         //g2.dispose();
     }
@@ -158,11 +217,49 @@ public class CarGame extends JPanel implements Runnable{
         //g2.dispose();
     }
 
+    public void drawPosition(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+
+        g2.setColor(Color.black);
+        g2.drawString( "POS: X ["+ String.format("%.1f",car.coordination.x) + "] : [" + String.format("%.1f",car.coordination.y) + "]",20, 35);
+        //g2.dispose();
+    }
+
     public void drawPlatform(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
 
         g2.setColor(Color.black);
-        g2.drawString( "PLATFORM: "+ car.getPlatformAngle(),20, 35);
+        g2.drawString( "PLATFORM: "+ car.getPlatformAngle(),20, 50);
         //g2.dispose();
+    }
+
+    public void drawLoadSize(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+
+        g2.setColor(Color.black);
+        g2.drawString( "LOAD: "+ car.getLoadSize(),20, 65);
+        //g2.dispose();
+    }
+
+    public void drawLoad(Graphics g) {
+        Graphics2D g2 = (Graphics2D)g;
+
+        AffineTransform transform = new AffineTransform();
+        AffineTransform oldTransform = g2.getTransform();
+
+        Point carBodySize=new Point(20, 10);
+
+
+        transform.rotate(rotationV, carX+(carBodySize.x), carY+((double) carBodySize.y /2));
+
+        g2.setTransform(transform);
+
+        g2.setColor(Color.red);
+        g2.fillRect(carX, carY, + carLoadOffset, tileSize);
+        //g2.dispose();
+
+        g2.setTransform(oldTransform);
+
+
     }
 }

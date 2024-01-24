@@ -1,9 +1,10 @@
 import java.awt.*;
 import java.io.PrintStream;
+import java.util.Stack;
 
 public class Scania extends Car {
-    private int platformAngle;
-    private final int increaseAmount = 1;
+    protected int platformAngle;
+    protected final int increaseAmount = 1;
     public Scania(){
         super("Scania", 2, Color.GRAY, 200);
         platformAngle =0;
@@ -15,13 +16,13 @@ public class Scania extends Car {
     }
 
     @Override
-    public void increasePlatformAngle() {
+    protected void increasePlatformAngle() {
         if(getCurrentSpeed() == 0) {
             platformAngle = Math.min(70, platformAngle + increaseAmount);
         }
     }
     @Override
-    public void decreasePlatformAngle() {
+    protected void decreasePlatformAngle() {
         if(getCurrentSpeed() == 0) {
             platformAngle= Math.max(0, platformAngle - increaseAmount);
         }
@@ -38,24 +39,14 @@ public class Scania extends Car {
     }
     @Override
     public void gas(double amount){
-        if(platformAngle==0) {
+        if(getPlatformAngle()==0) {
             incrementSpeed(speedInterval(amount));
         }
     }
     @Override
     public void brake(double amount){
-        if(platformAngle==0) {
+        if(getPlatformAngle()==0) {
             decrementSpeed(speedInterval(amount));
         }
     }
-
-    @Override
-    protected double speedFactor(){
-        return enginePower * 0.01;
-    }
-
-
-
-
-
 }

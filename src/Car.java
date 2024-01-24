@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.util.Stack;
 
 public abstract class Car implements Movable {
     protected int nrDoors; // Number of doors on the car
@@ -50,7 +51,7 @@ public abstract class Car implements Movable {
 
 
     protected double speedFactor() {
-        return 0.01;
+        return enginePower * 0.01;
     }
 
 
@@ -77,6 +78,8 @@ public abstract class Car implements Movable {
     protected double speedInterval(double amount) {
         return Math.max(0, Math.min(1, amount));
     }
+
+
 
 
     // TODO fix this method according to lab pm
@@ -124,11 +127,30 @@ public abstract class Car implements Movable {
         return 0;
     }
 
-    public void increasePlatformAngle() {
+    protected void increasePlatformAngle() {
 
     }
-    public void decreasePlatformAngle() {
+    protected void decreasePlatformAngle() {
     }
+
+
+    protected void addCar(Car car) {
+    }
+
+    protected void removeCar() {
+    }
+
+    public void getLoadPos() {
+    }
+
+    public int getLoadSize() {
+        return 0;
+    }
+
+    public Stack<Car> getLoadList() {
+        return null;
+    }
+
 
 
 }

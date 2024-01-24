@@ -3,7 +3,7 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
 
-    public boolean upPressed, downPressed,leftPressed,rightPressed, qPressed, aPressed;
+    public boolean upPressed, downPressed,leftPressed,rightPressed, qPressed, aPressed ,nPressed, mPressed, bPressed;
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -28,13 +28,25 @@ public class KeyHandler implements KeyListener {
         if(code == KeyEvent.VK_RIGHT) {
             rightPressed=true;
         }
-
+//PLATFORM
         if(code == KeyEvent.VK_Q) {
             qPressed=true;
         }
         if(code == KeyEvent.VK_A) {
             aPressed=true;
         }
+//LOAD, n = add, m = remove, b = getPos
+        if(code == KeyEvent.VK_N) {
+            nPressed=true;
+        }
+        if(code == KeyEvent.VK_M) {
+            mPressed=true;
+        }
+
+        if(code == KeyEvent.VK_B) {
+            bPressed=true;
+        }
+
 
     }
 
@@ -58,12 +70,22 @@ public class KeyHandler implements KeyListener {
             rightPressed=false;
 
         }
-
+        //PLATFORM
         if(code == KeyEvent.VK_Q) {
             qPressed=false;
         }
         if(code == KeyEvent.VK_A) {
             aPressed=false;
+        }
+        //LOAD, n = add, m = remove, b = getPos
+        if(code == KeyEvent.VK_N) {
+            nPressed=false;
+        }
+        if(code == KeyEvent.VK_M) {
+            mPressed=false;
+        }
+        if(code == KeyEvent.VK_B) {
+            bPressed=false;
         }
 
     }
