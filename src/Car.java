@@ -122,7 +122,11 @@ public abstract class Car implements Movable {
         }
     }
 
-    //TODO
+    //TODO -- solution for cargame = shit , därför behöver vi dra detta
+    // via overloading för vår app :))))))))
+    //  skulle annars haft de bara tillgängliga i Scania -> CarCarrier
+    //  inget som behövt ärvas från car.
+
     public int getPlatformAngle() {
         return 0;
     }

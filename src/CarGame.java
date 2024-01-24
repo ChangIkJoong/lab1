@@ -229,7 +229,7 @@ public class CarGame extends JPanel implements Runnable{
     public void drawInstructions(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(Color.black);
-        g2.drawString( " Q - RAMP UP : A - RAMP DOWN : N - ADD LOAD : M - REMOVE LOAD : B - View Load in Compiler",screenWidth-650, screenHeight-20);
+        g2.drawString( " Q - RAMP UP : A - RAMP DOWN : N - ADD LOAD : M - REMOVE LOAD : B - View Load in Compiler",screenWidth/2, screenHeight-20);
         //g2.dispose();
     }
 
