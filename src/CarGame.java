@@ -134,12 +134,14 @@ public class CarGame extends JPanel implements Runnable{
     public void paintComponent(Graphics g){
 
         super.paintComponent(g);
-        draw(g);
-        draw2(g);
-        draw3(g);
+        drawCar(g);
+        drawSpeed(g);
+        if(car.getPlatformAngle()!=0) {
+            drawPlatform(g);
+        }
     }
 
-    public void draw(Graphics g) {
+    public void drawCar(Graphics g) {
         Graphics2D g2 = (Graphics2D)g;
 
         g2.setColor(car.getColor());
@@ -148,7 +150,7 @@ public class CarGame extends JPanel implements Runnable{
         //g2.dispose();
     }
 
-    public void draw2(Graphics g) {
+    public void drawSpeed(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
 
         g2.setColor(Color.black);
@@ -156,11 +158,11 @@ public class CarGame extends JPanel implements Runnable{
         //g2.dispose();
     }
 
-    public void draw3(Graphics g) {
+    public void drawPlatform(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
 
         g2.setColor(Color.black);
-        g2.drawString( "PLATFORM: "+ String.valueOf(car.getPlatformAngle()),20, 35);
+        g2.drawString( "PLATFORM: "+ car.getPlatformAngle(),20, 35);
         //g2.dispose();
     }
 }
