@@ -23,7 +23,7 @@ public class CarGame extends JPanel implements Runnable{
     int carY=screenHeight/2;
 
 
-    Car car = new Saab95();
+    Car car = new Scania();
 
     public CarGame () {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -79,15 +79,10 @@ public class CarGame extends JPanel implements Runnable{
 
         if(keyH.upPressed) {
             car.gas(0.1);
-            out.println("GAS, speed: ");
-            out.println(car.currentSpeed);
-
 
         }
         else if(keyH.downPressed) {
             car.brake(0.1);
-            out.println("BRAKE, speed: ");
-            out.println(car.currentSpeed);
 
         }
 
@@ -106,6 +101,13 @@ public class CarGame extends JPanel implements Runnable{
             keyH.rightPressed=false;
         }
 
+        else if(keyH.qPressed) {
+            car.increasePlatformAngle();
+        }
+
+        else if(keyH.aPressed) {
+            car.decreasePlatformAngle();
+        }
 
 
         car.move();
@@ -134,6 +136,7 @@ public class CarGame extends JPanel implements Runnable{
         super.paintComponent(g);
         draw(g);
         draw2(g);
+        draw3(g);
     }
 
     public void draw(Graphics g) {
@@ -149,7 +152,15 @@ public class CarGame extends JPanel implements Runnable{
         Graphics2D g2 = (Graphics2D) g;
 
         g2.setColor(Color.black);
-        g2.drawString(String.valueOf(car.getCurrentSpeed()),20, 20);
+        g2.drawString( "SPEEDOMETER: "+ String.format("%.1f", car.getCurrentSpeed()),20, 20);
+        //g2.dispose();
+    }
+
+    public void draw3(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+
+        g2.setColor(Color.black);
+        g2.drawString( "PLATFORM: "+ String.valueOf(car.getPlatformAngle()),20, 35);
         //g2.dispose();
     }
 }

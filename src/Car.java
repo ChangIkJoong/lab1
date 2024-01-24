@@ -12,6 +12,14 @@ public abstract class Car implements Movable {
 
     public Point orientation = new Point(0, 1);
 
+    public Car(String model, int nrDoors, Color color, double enginePower){
+        this.modelName = model;
+        this.nrDoors = nrDoors;
+        this.setColor(color);
+        this.enginePower = enginePower;
+        this.stopEngine();
+    }
+
     public int getNrDoors() {
         return nrDoors;
     }
@@ -48,10 +56,10 @@ public abstract class Car implements Movable {
 
     //TODO uppgift 4 Sanity Checks
 
-    private void incrementSpeed(double amount){
+    protected void incrementSpeed(double amount){
         currentSpeed = speedValidation(getCurrentSpeed() + speedFactor() * amount);
     }
-    private void decrementSpeed(double amount){
+    protected void decrementSpeed(double amount){
         currentSpeed = speedValidation(getCurrentSpeed() - speedFactor() * amount);
     }
 
@@ -66,7 +74,7 @@ public abstract class Car implements Movable {
         return Math.max(0, Math.min(amount, enginePower));
     }
 
-    private double speedInterval(double amount) {
+    protected double speedInterval(double amount) {
         return Math.max(0, Math.min(1, amount));
     }
 
@@ -109,6 +117,17 @@ public abstract class Car implements Movable {
             orientation.y = (int) orientation.getX();
             orientation.x=0;
         }
+    }
+
+    //TODO
+    public int getPlatformAngle() {
+        return 0;
+    }
+
+    public void increasePlatformAngle() {
+
+    }
+    public void decreasePlatformAngle() {
     }
 
 
