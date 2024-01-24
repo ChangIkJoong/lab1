@@ -137,7 +137,8 @@ public abstract class Car implements Movable {
     protected void addCar(Car car) {
     }
 
-    protected void removeCar() {
+    protected Car removeCar() {
+        return null;
     }
 
     public void getLoadPos() {
