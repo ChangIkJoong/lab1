@@ -11,8 +11,8 @@ public class CarGame extends JPanel implements Runnable{
     final int scale=1;
     final int tileSize = originalTileSize * scale;
 
-    final int screenWidth = 1660;
-    final int screenHeight = 720;
+    static int screenWidth = 1660;
+    static int screenHeight = 720;
 
     Thread gameThread;
 
@@ -122,16 +122,16 @@ public class CarGame extends JPanel implements Runnable{
         else if(keyH.nPressed && car instanceof CarCarrier) {
             car.addCar(new Saab95());
             keyH.nPressed=false;
-            carLoadOffset++;
-            if(carLoadOffset>=car.getLoadSize()) {
-                carLoadOffset=car.getLoadSize();
+            carLoadOffset+=2;
+            if(carLoadOffset>=car.getLoadSize()*2) {
+                carLoadOffset=car.getLoadSize()*2;
             }
         }
 
         else if(keyH.mPressed && car instanceof CarCarrier) {
             car.removeCar();
             keyH.mPressed=false;
-            carLoadOffset--;
+            carLoadOffset-=2;
             if(carLoadOffset< 0 ) {
                 carLoadOffset=0;
             }
@@ -167,6 +167,7 @@ public class CarGame extends JPanel implements Runnable{
     public void paintComponent(Graphics g){
 
         super.paintComponent(g);
+        drawInstructions(g);
         drawCar(g);
         drawSpeed(g);
         drawPosition(g);
@@ -222,6 +223,13 @@ public class CarGame extends JPanel implements Runnable{
 
         g2.setColor(Color.black);
         g2.drawString( "POS: X ["+ String.format("%.1f",car.coordination.x) + "] : [" + String.format("%.1f",car.coordination.y) + "]",20, 35);
+        //g2.dispose();
+    }
+
+    public void drawInstructions(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setColor(Color.black);
+        g2.drawString( " Q - RAMP UP : A - RAMP DOWN : N - ADD LOAD : M - REMOVE LOAD : B - View Load in Compiler",screenWidth-650, screenHeight-20);
         //g2.dispose();
     }
 
