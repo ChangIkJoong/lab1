@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.util.List;
 import java.util.Stack;
 
 public abstract class Car implements Movable {
@@ -124,39 +125,8 @@ public abstract class Car implements Movable {
 
     //TODO -- solution for cargame = shit , därför behöver vi dra detta
     // via overloading för vår app :))))))))
-    //  skulle annars haft de bara tillgängliga i Scania -> CarCarrier
+    //  skulle annars haft de bara tillgängliga i Scania -> Transport
     //  inget som behövt ärvas från car.
-
-    public int getPlatformAngle() {
-        return 0;
-    }
-
-    protected void increasePlatformAngle() {
-
-    }
-    protected void decreasePlatformAngle() {
-    }
-
-
-    protected void addCar(Car car) {
-    }
-
-    protected Car removeCar() {
-        return null;
-    }
-
-    public void getLoadPos() {
-    }
-
-    public int getLoadSize() {
-        return 0;
-    }
-
-    public Stack<Car> getLoadList() {
-        return null;
-    }
-
-
 
 }
 

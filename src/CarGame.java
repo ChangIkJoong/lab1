@@ -1,5 +1,5 @@
-import org.hamcrest.core.IsInstanceOf;
-import java.util.Stack;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -29,16 +29,17 @@ public class CarGame extends JPanel implements Runnable{
 
     int carLoadOffset=0;
 
+    List<Car> poppedCars= new ArrayList<>();
+
     //TODO CAR ATTRIBUTE
-    Car car = new CarCarrier();
+    Transport car = new Transport();
 
     public CarGame () {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
-        this.setBackground(Color.WHITE);
+        this.setBackground(Color.LIGHT_GRAY);
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);
-
     }
 
     public void startGameThread(){
@@ -119,7 +120,7 @@ public class CarGame extends JPanel implements Runnable{
         }
 
 
-        else if(keyH.nPressed && car instanceof CarCarrier) {
+        else if(keyH.nPressed && car.getCurrentSpeed()==0) {
             car.addCar(new Saab95());
             keyH.nPressed=false;
             carLoadOffset+=2;
@@ -128,16 +129,17 @@ public class CarGame extends JPanel implements Runnable{
             }
         }
 
-        else if(keyH.mPressed && car instanceof CarCarrier) {
+        else if(keyH.mPressed && car.getCurrentSpeed()==0) {
             car.removeCar();
+
+            carLoadOffset -= 2;
+                if (carLoadOffset < 0) {
+                    carLoadOffset = 0;
+                }
             keyH.mPressed=false;
-            carLoadOffset-=2;
-            if(carLoadOffset< 0 ) {
-                carLoadOffset=0;
-            }
         }
 
-        else if(keyH.bPressed && car instanceof CarCarrier) {
+        else if(keyH.bPressed && !poppedCars.isEmpty()) {
             car.getLoadPos();
             keyH.bPressed=false;
         }
@@ -256,7 +258,6 @@ public class CarGame extends JPanel implements Runnable{
         AffineTransform oldTransform = g2.getTransform();
 
         Point carBodySize=new Point(20, 10);
-
 
         transform.rotate(rotationV, carX+(carBodySize.x), carY+((double) carBodySize.y /2));
 
