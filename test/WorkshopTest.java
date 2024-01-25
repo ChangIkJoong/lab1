@@ -12,7 +12,7 @@ public class WorkshopTest {
 
     static VolvoVAH300 transport;
 
-    static BilVerkstad verkstad;
+    static RepairShop verkstad;
 
 
     @Before
@@ -20,7 +20,7 @@ public class WorkshopTest {
         saab = new Saab95();
         volvo = new Volvo240();
         transport = new VolvoVAH300();
-        verkstad = new BilVerkstad("test", 5, List.of(new String[]{"Volvo240"}), new Point2D.Double(100,200));
+        verkstad = new RepairShop("test", 5, List.of(new String[]{"Volvo240"}), new Point2D.Double(100,200));
     }
 
     @Test

@@ -4,7 +4,6 @@ import java.util.Stack;
 
 public class Scania extends Truck {
     protected int platformAngle;
-    protected final int increaseAmount = 1;
     public Scania(){
         super("Scania", 2, Color.cyan, 200);
         platformAngle =0;

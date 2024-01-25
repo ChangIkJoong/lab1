@@ -1,6 +1,5 @@
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import javax.swing.*;
 import java.awt.*;
@@ -34,11 +33,11 @@ public class CarGame extends JPanel implements Runnable{
 
     //TODO CAR ATTRIBUTE
     VolvoVAH300 car = new VolvoVAH300();
-    BilVerkstad verkstad = new BilVerkstad("Chalmers", 40,List.of(new String[]{"Volvo240", "Saab95"}), new Point2D.Double(100, 200));
-    BilVerkstad verkstad2 = new BilVerkstad("KTH", 40,List.of(new String[]{"Saab95"}), new Point2D.Double(800, 600));
+    RepairShop verkstad = new RepairShop("Chalmers", 40,List.of(new String[]{"Volvo240", "Saab95"}), new Point2D.Double(100, 200));
+    RepairShop verkstad2 = new RepairShop("KTH", 40,List.of(new String[]{"Saab95"}), new Point2D.Double(800, 600));
 
-    BilVerkstad verkstad3 = new BilVerkstad("LTH", 40,List.of(new String[]{"Volvo240"}), new Point2D.Double(1300, 100));
-    List<BilVerkstad> workshopS = new ArrayList<>(List.of(verkstad, verkstad2, verkstad3));
+    RepairShop verkstad3 = new RepairShop("LTH", 40,List.of(new String[]{"Volvo240"}), new Point2D.Double(1300, 100));
+    List<RepairShop> workshopS = new ArrayList<>(List.of(verkstad, verkstad2, verkstad3));
 
 
     public CarGame () {
@@ -133,7 +132,7 @@ public class CarGame extends JPanel implements Runnable{
 
 
         else if(keyH.nPressed && car.getCurrentSpeed()==0) {
-            for(BilVerkstad v : workshopS) {
+            for(RepairShop v : workshopS) {
                 if(v.isWithinRectangle(car.coordination)) {
                     v.loadTransport(car);
                     carLoadOffset+=2;
@@ -147,7 +146,7 @@ public class CarGame extends JPanel implements Runnable{
         }
 
         else if(keyH.mPressed && car.getCurrentSpeed()==0) {
-            for(BilVerkstad v : workshopS) {
+            for(RepairShop v : workshopS) {
                 if(v.isWithinRectangle(car.coordination)) {
                     v.unloadTransport(car);
                     carLoadOffset-=2;

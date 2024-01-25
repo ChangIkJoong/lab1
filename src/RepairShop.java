@@ -1,7 +1,7 @@
 import java.awt.geom.Point2D;
 import java.util.*;
 
-public class BilVerkstad {
+public class RepairShop {
     private final String name;
     protected final int maxStorageCapacity;
     protected final List<String> acceptedCars;
@@ -11,7 +11,7 @@ public class BilVerkstad {
 
 
 
-    public BilVerkstad(String name, int capacity, List<String> acceptedCars, Point2D.Double coords) {
+    public RepairShop(String name, int capacity, List<String> acceptedCars, Point2D.Double coords) {
         this.acceptedCars=acceptedCars;
         this.name=name;
         this.maxStorageCapacity = capacity;
@@ -39,6 +39,7 @@ public class BilVerkstad {
         }
     }
 
+    //TODO För att spelet ska kunna fungera och plocka samt avlasta grejjer...
 
     public boolean isWithinRectangle(Point2D.Double other) {
         Point2D.Double topLeft = new Point2D.Double(coordination.x, coordination.y);
