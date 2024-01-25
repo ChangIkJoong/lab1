@@ -125,7 +125,7 @@ public abstract class Car implements Movable {
 
     //TODO -- solution for cargame = shit , därför behöver vi dra detta
     // via overloading för vår app :))))))))
-    //  skulle annars haft de bara tillgängliga i Scania -> Transport
+    //  skulle annars haft de bara tillgängliga i Scania -> VolvoVAH300
     //  inget som behövt ärvas från car.
 
 }

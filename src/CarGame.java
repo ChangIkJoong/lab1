@@ -1,3 +1,4 @@
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
@@ -29,10 +30,12 @@ public class CarGame extends JPanel implements Runnable{
 
     int carLoadOffset=0;
 
-    List<Car> poppedCars= new ArrayList<>();
 
     //TODO CAR ATTRIBUTE
-    Transport car = new Transport();
+    VolvoVAH300 car = new VolvoVAH300();
+    BilVerkstad verkstad = new BilVerkstad("Chalmers", 40,List.of(new String[]{"Volvo240", "Saab95"}), new Point2D.Double(100, 200));
+    BilVerkstad verkstad2 = new BilVerkstad("KTH", 40,List.of(new String[]{"Volvo240", "Saab95"}), new Point2D.Double(800, 600));
+
 
     public CarGame () {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -120,17 +123,28 @@ public class CarGame extends JPanel implements Runnable{
         }
 
 
-        else if(keyH.nPressed && car.getCurrentSpeed()==0) {
-            car.addCar(new Saab95());
+        else if(keyH.nPressed && car.getCurrentSpeed()==0 && verkstad.isWithinRectangle(car.coordination)) {
+            verkstad.loadTransport(car);
             keyH.nPressed=false;
             carLoadOffset+=2;
-            if(carLoadOffset>=car.getLoadSize()*2) {
-                carLoadOffset=car.getLoadSize()*2;
+            if(carLoadOffset>=car.getCargoSize()*2) {
+                carLoadOffset=car.getCargoSize()*2;
             }
         }
 
-        else if(keyH.mPressed && car.getCurrentSpeed()==0) {
-            car.removeCar();
+        else if(keyH.nPressed && car.getCurrentSpeed()==0 && verkstad2.isWithinRectangle(car.coordination)) {
+            verkstad2.loadTransport(car);
+            keyH.nPressed=false;
+            carLoadOffset+=2;
+            if(carLoadOffset>=car.getCargoSize()*2) {
+                carLoadOffset=car.getCargoSize()*2;
+            }
+        }
+
+
+
+        else if(keyH.mPressed && car.getCurrentSpeed()==0 && verkstad.isWithinRectangle(car.coordination)){
+            verkstad.unloadTransport(car);
 
             carLoadOffset -= 2;
                 if (carLoadOffset < 0) {
@@ -139,8 +153,19 @@ public class CarGame extends JPanel implements Runnable{
             keyH.mPressed=false;
         }
 
-        else if(keyH.bPressed && !poppedCars.isEmpty()) {
-            car.getLoadPos();
+        else if(keyH.mPressed && car.getCurrentSpeed()==0 && verkstad2.isWithinRectangle(car.coordination)){
+            verkstad2.unloadTransport(car);
+
+            carLoadOffset -= 2;
+            if (carLoadOffset < 0) {
+                carLoadOffset = 0;
+            }
+            keyH.mPressed=false;
+        }
+
+
+        else if(keyH.bPressed ) {
+            car.getCargoPos();
             keyH.bPressed=false;
         }
 
@@ -169,17 +194,44 @@ public class CarGame extends JPanel implements Runnable{
     public void paintComponent(Graphics g){
 
         super.paintComponent(g);
+        drawWorkshop(g);
+        drawWorkshop2(g);
+
+
+
         drawInstructions(g);
         drawCar(g);
         drawSpeed(g);
         drawPosition(g);
+
         if(car.getPlatformAngle()!=0) {
             drawPlatform(g);
         }
-        if(car.getLoadSize() != 0) {
+        if(car.getCargoSize() != 0) {
             drawLoadSize(g);
             drawLoad(g);
         }
+
+
+    }
+
+    public void drawWorkshop2(Graphics g) {
+        Graphics2D g2 = (Graphics2D)g;
+
+        g2.setColor(Color.DARK_GRAY);
+        g2.fillRect((int) verkstad2.coordination.x, (int) verkstad2.coordination.y, 100,50);
+
+        //g2.dispose();
+    }
+
+
+    public void drawWorkshop(Graphics g) {
+        Graphics2D g2 = (Graphics2D)g;
+
+        g2.setColor(Color.black);
+        g2.fillRect((int) verkstad.coordination.x, (int) verkstad.coordination.y, 100,50);
+
+        //g2.dispose();
     }
 
     public void drawCar(Graphics g) {
@@ -247,7 +299,7 @@ public class CarGame extends JPanel implements Runnable{
         Graphics2D g2 = (Graphics2D) g;
 
         g2.setColor(Color.black);
-        g2.drawString( "LOAD: "+ car.getLoadSize(),20, 65);
+        g2.drawString( "LOAD: "+ car.getCargoSize(),20, 65);
         //g2.dispose();
     }
 

@@ -17,15 +17,18 @@ public abstract class Truck extends Car {
         platformAngle=n;
     }
 
+
     protected void increasePlatformAngle() {
         if(getCurrentSpeed() == 0) {
             platformAngle = Math.min(70, platformAngle + increaseAmount);
+            setPlatformAngle(70);
         }
     }
 
     protected void decreasePlatformAngle() {
         if(getCurrentSpeed() == 0) {
             platformAngle= Math.max(0, platformAngle - increaseAmount);
+            setPlatformAngle(0);
         }
     }
     @Override

@@ -1,37 +1,50 @@
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class BilVerkstad {
     private final String name;
-    private final int maxCarStorage;
-    private final List<String> acceptedCars;
-    private final List<Car> carStorage;
+    protected final int maxStorageCapacity;
+    protected final List<String> acceptedCars;
+    protected final List<Car> carStorage;
 
-    public Point2D.Double coordination = new Point2D.Double();
+    public Point2D.Double coordination;
 
 
 
-    public BilVerkstad(String name, int storage, int x, int y, List<String> acceptedCars) {
-        this.acceptedCars = acceptedCars;
+    public BilVerkstad(String name, int capacity, List<String> acceptedCars, Point2D.Double coords) {
+        this.acceptedCars=acceptedCars;
         this.name=name;
-        this.maxCarStorage = storage;
+        this.maxStorageCapacity = capacity;
         this.carStorage = new ArrayList<>();
-        this.coordination.x= x;
-        this.coordination.y=y;
+        this.coordination=coords;
     }
 
     private boolean validateModel(Car car) {
         return acceptedCars.contains(car.modelName);
     }
 
-    protected void enterCar(Car car) {
+    protected void unloadTransport(VolvoVAH300 transport) {
+        if (transport.cargo.peek() != null && validateModel((transport.cargo.peek())) && carStorage.size() < maxStorageCapacity) {
+                Car newCar = transport.removeCar();
+                newCar.coordination = this.coordination;
+                carStorage.add(newCar);
+        }
+    }
+
+    protected void loadTransport(VolvoVAH300 transport) {
+        if(!carStorage.isEmpty()) {
+            Car newCar = carStorage.removeLast();
+            newCar.coordination = transport.coordination;
+            transport.addCar(newCar);
+        }
     }
 
 
+    public boolean isWithinRectangle(Point2D.Double other) {
+        Point2D.Double topLeft = new Point2D.Double(coordination.x, coordination.y);
+        Point2D.Double bottomRight = new Point2D.Double(coordination.x + 100, coordination.y + 50);
 
-
-
-
-
+        return other.x >= topLeft.x && other.x <= bottomRight.x &&
+                other.y >= topLeft.y && other.y <= bottomRight.y;
+    }
 }
