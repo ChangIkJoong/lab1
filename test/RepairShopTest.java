@@ -6,7 +6,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class WorkshopTest {
+public class RepairShopTest {
     static Saab95 saab;
     static Volvo240 volvo;
 
