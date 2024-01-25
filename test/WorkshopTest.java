@@ -37,10 +37,30 @@ public class WorkshopTest {
     }
     @Test
     public void loadTransport() {
-        verkstad.carStorage.clear();
-        transport.addCar(volvo);
+        verkstad.carStorage.add(volvo);
         verkstad.loadTransport(transport);
 
         assertTrue(transport.getLoadList().contains(volvo));
+    }
+
+    @Test
+    public void loadedTransportPosition() {
+        transport.decreasePlatformAngle();
+        verkstad.carStorage.add(volvo);
+        int cordX= (int) verkstad.carStorage.getLast().coordination.x;
+        int cordY= (int) verkstad.carStorage.getLast().coordination.y;
+
+        verkstad.loadTransport(transport);
+
+        transport.increasePlatformAngle();
+        transport.gas(1);
+        transport.move();
+        transport.turnLeft();
+        transport.move();
+
+        assert transport.cargo.peek() != null;
+        assertNotEquals(cordX, transport.cargo.peek().coordination.x);
+        assert transport.cargo.peek() != null;
+        assertNotEquals(cordY, transport.cargo.peek().coordination.y);
     }
 }

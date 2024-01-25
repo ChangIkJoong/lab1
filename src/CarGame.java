@@ -131,11 +131,10 @@ public class CarGame extends JPanel implements Runnable{
         }
 
 
-        else if(keyH.nPressed && car.getCurrentSpeed()==0) {
+        else if(keyH.nPressed && car.getCurrentSpeed()==0 &&(car.getPlatformAngle()==0 || !car.platform)) {
             for(RepairShop v : workshopS) {
                 if(v.isWithinRectangle(car.coordination)) {
                     v.loadTransport(car);
-                    carLoadOffset+=2;
                     if(carLoadOffset>=car.getCargoSize()*2) {
                         carLoadOffset=car.getCargoSize()*2;
                     }
@@ -145,24 +144,25 @@ public class CarGame extends JPanel implements Runnable{
             keyH.nPressed=false;
         }
 
-        else if(keyH.mPressed && car.getCurrentSpeed()==0) {
+        else if(keyH.mPressed && car.getCurrentSpeed()==0 &&car.getPlatformAngle()==0) {
             for(RepairShop v : workshopS) {
                 if(v.isWithinRectangle(car.coordination)) {
                     v.unloadTransport(car);
-                    carLoadOffset-=2;
                     if (carLoadOffset < 0) {
                         carLoadOffset = 0;
                     }
                     break;
                 }
             }
-            keyH.nPressed=false;
+            keyH.mPressed=false;
         }
 
         else if(keyH.bPressed ) {
-            car.getCargoPos();
+            //car.getCargoPos();
             keyH.bPressed=false;
         }
+
+        carLoadOffset=car.getCargoSize()*2;
 
 
         car.move();
@@ -189,53 +189,88 @@ public class CarGame extends JPanel implements Runnable{
     public void paintComponent(Graphics g){
 
         super.paintComponent(g);
-        drawWorkshop(g);
-        drawWorkshop2(g);
-        drawWorkshop3(g);
+        for(RepairShop v : workshopS) {
+            drawWorkshop(g, v);
+        }
+
+        for(RepairShop v : workshopS) {
+            drawWorkshopName(g, v);
+        }
 
 
+        drawCar(g);
 
         drawInstructions(g);
-        drawCar(g);
+        drawCarRest(g);
+        drawCarFirst(g);
+        drawCarList(g);
+        drawCarMyText(g);
+
+
         drawSpeed(g);
         drawPosition(g);
 
-        if(car.getPlatformAngle()!=0) {
-            drawPlatform(g);
-        }
         if(car.getCargoSize() != 0) {
             drawLoadSize(g);
             drawLoad(g);
         }
 
+        if(car.getPlatformAngle()!=0) {
+            drawPlatform(g);
+            drawRamp(g);
+        }
+
+
+
 
     }
-    public void drawWorkshop3(Graphics g) {
+    public void drawCarFirst(Graphics g) {
         Graphics2D g2 = (Graphics2D)g;
-
-        g2.setColor(Color.gray);
-        g2.fillRect((int) verkstad3.coordination.x, (int) verkstad3.coordination.y, 100,50);
-
-        //g2.dispose();
+        g2.setColor(Color.YELLOW);
+        int offset = screenHeight-35;
+        g2.fillRect((int) 5, (int) offset, 80,17);
     }
 
-    public void drawWorkshop2(Graphics g) {
+    public void drawCarRest(Graphics g) {
         Graphics2D g2 = (Graphics2D)g;
+        g2.setColor(Color.ORANGE);
+        int offset = screenHeight-35;
+        g2.fillRect((int) 5, (int) offset, 80,-120);
+    }
 
+    public void drawCarMyText(Graphics g) {
+        Graphics2D g2 = (Graphics2D)g;
+        g2.setColor(Color.BLACK);
+        int offset = screenHeight-160;
+        g2.drawString("CARGO: ", 5 , offset);
+    }
+
+    public void drawCarList(Graphics g) {
+        Graphics2D g2 = (Graphics2D)g;
+        g2.setColor(Color.BLACK);
+        int offset = (int) screenHeight-20 ;
+        for (Car carM : car.getLoadList()) {
+            g2.drawString(carM.modelName, 10 , offset);
+            offset -=17;
+        }
+    }
+
+
+
+
+    public void drawWorkshopName(Graphics g, RepairShop v) {
+        Graphics2D g2 = (Graphics2D)g;
         g2.setColor(Color.DARK_GRAY);
-        g2.fillRect((int) verkstad2.coordination.x, (int) verkstad2.coordination.y, 100,50);
-
-        //g2.dispose();
+        int offset = (int) v.coordination.y +5;
+        for (Car carM : v.carStorage) {
+            g2.drawString(carM.modelName, (int) v.coordination.x-70,offset);
+            offset +=17;
+        }
     }
-
-
-    public void drawWorkshop(Graphics g) {
+    public void drawWorkshop(Graphics g, RepairShop v) {
         Graphics2D g2 = (Graphics2D)g;
-
-        g2.setColor(Color.black);
-        g2.fillRect((int) verkstad.coordination.x, (int) verkstad.coordination.y, 100,50);
-
-        //g2.dispose();
+        g2.setColor(Color.DARK_GRAY);
+        g2.fillRect((int) v.coordination.x, (int) v.coordination.y, 100,50);
     }
 
     public void drawCar(Graphics g) {
@@ -321,6 +356,27 @@ public class CarGame extends JPanel implements Runnable{
 
         g2.setColor(Color.red);
         g2.fillRect(carX, carY, + carLoadOffset, tileSize);
+        //g2.dispose();
+
+        g2.setTransform(oldTransform);
+
+
+    }
+
+    public void drawRamp(Graphics g) {
+        Graphics2D g2 = (Graphics2D)g;
+
+        AffineTransform transform = new AffineTransform();
+        AffineTransform oldTransform = g2.getTransform();
+
+        Point carBodySize=new Point(20, 10);
+
+        transform.rotate(rotationV, carX+(carBodySize.x), carY+((double) carBodySize.y /2));
+
+        g2.setTransform(transform);
+
+        g2.setColor(Color.BLUE);
+        g2.fillRect(carX, carY, 4, tileSize);
         //g2.dispose();
 
         g2.setTransform(oldTransform);
