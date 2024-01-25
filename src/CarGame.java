@@ -1,5 +1,6 @@
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javax.swing.*;
 import java.awt.*;
@@ -34,7 +35,10 @@ public class CarGame extends JPanel implements Runnable{
     //TODO CAR ATTRIBUTE
     VolvoVAH300 car = new VolvoVAH300();
     BilVerkstad verkstad = new BilVerkstad("Chalmers", 40,List.of(new String[]{"Volvo240", "Saab95"}), new Point2D.Double(100, 200));
-    BilVerkstad verkstad2 = new BilVerkstad("KTH", 40,List.of(new String[]{"Volvo240", "Saab95"}), new Point2D.Double(800, 600));
+    BilVerkstad verkstad2 = new BilVerkstad("KTH", 40,List.of(new String[]{"Saab95"}), new Point2D.Double(800, 600));
+
+    BilVerkstad verkstad3 = new BilVerkstad("LTH", 40,List.of(new String[]{"Volvo240"}), new Point2D.Double(1300, 100));
+    List<BilVerkstad> workshopS = new ArrayList<>(List.of(verkstad, verkstad2, verkstad3));
 
 
     public CarGame () {
@@ -53,6 +57,11 @@ public class CarGame extends JPanel implements Runnable{
 
     @Override
     public void run() {
+        verkstad.carStorage.addAll(new ArrayList<>(List.of(new Saab95(), new Volvo240(), new Volvo240(), new Saab95(), new Volvo240(), new Volvo240(), new Saab95())));
+        verkstad2.carStorage.addAll(new ArrayList<>(List.of(new Saab95(),new Saab95(), new Saab95(),new Saab95(),new Saab95(), new Saab95())));
+        verkstad3.carStorage.addAll(new ArrayList<>(List.of(new Volvo240(), new Volvo240(),new Volvo240(), new Volvo240())));
+
+
 
         double drawInterval = 1000000000/FPS;
         double nextDrawTime = System.nanoTime() + drawInterval;
@@ -123,46 +132,33 @@ public class CarGame extends JPanel implements Runnable{
         }
 
 
-        else if(keyH.nPressed && car.getCurrentSpeed()==0 && verkstad.isWithinRectangle(car.coordination)) {
-            verkstad.loadTransport(car);
-            keyH.nPressed=false;
-            carLoadOffset+=2;
-            if(carLoadOffset>=car.getCargoSize()*2) {
-                carLoadOffset=car.getCargoSize()*2;
-            }
-        }
-
-        else if(keyH.nPressed && car.getCurrentSpeed()==0 && verkstad2.isWithinRectangle(car.coordination)) {
-            verkstad2.loadTransport(car);
-            keyH.nPressed=false;
-            carLoadOffset+=2;
-            if(carLoadOffset>=car.getCargoSize()*2) {
-                carLoadOffset=car.getCargoSize()*2;
-            }
-        }
-
-
-
-        else if(keyH.mPressed && car.getCurrentSpeed()==0 && verkstad.isWithinRectangle(car.coordination)){
-            verkstad.unloadTransport(car);
-
-            carLoadOffset -= 2;
-                if (carLoadOffset < 0) {
-                    carLoadOffset = 0;
+        else if(keyH.nPressed && car.getCurrentSpeed()==0) {
+            for(BilVerkstad v : workshopS) {
+                if(v.isWithinRectangle(car.coordination)) {
+                    v.loadTransport(car);
+                    carLoadOffset+=2;
+                    if(carLoadOffset>=car.getCargoSize()*2) {
+                        carLoadOffset=car.getCargoSize()*2;
+                    }
+                    break;
                 }
-            keyH.mPressed=false;
-        }
-
-        else if(keyH.mPressed && car.getCurrentSpeed()==0 && verkstad2.isWithinRectangle(car.coordination)){
-            verkstad2.unloadTransport(car);
-
-            carLoadOffset -= 2;
-            if (carLoadOffset < 0) {
-                carLoadOffset = 0;
             }
-            keyH.mPressed=false;
+            keyH.nPressed=false;
         }
 
+        else if(keyH.mPressed && car.getCurrentSpeed()==0) {
+            for(BilVerkstad v : workshopS) {
+                if(v.isWithinRectangle(car.coordination)) {
+                    v.unloadTransport(car);
+                    carLoadOffset-=2;
+                    if (carLoadOffset < 0) {
+                        carLoadOffset = 0;
+                    }
+                    break;
+                }
+            }
+            keyH.nPressed=false;
+        }
 
         else if(keyH.bPressed ) {
             car.getCargoPos();
@@ -196,6 +192,7 @@ public class CarGame extends JPanel implements Runnable{
         super.paintComponent(g);
         drawWorkshop(g);
         drawWorkshop2(g);
+        drawWorkshop3(g);
 
 
 
@@ -213,6 +210,14 @@ public class CarGame extends JPanel implements Runnable{
         }
 
 
+    }
+    public void drawWorkshop3(Graphics g) {
+        Graphics2D g2 = (Graphics2D)g;
+
+        g2.setColor(Color.gray);
+        g2.fillRect((int) verkstad3.coordination.x, (int) verkstad3.coordination.y, 100,50);
+
+        //g2.dispose();
     }
 
     public void drawWorkshop2(Graphics g) {
