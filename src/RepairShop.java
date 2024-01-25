@@ -32,7 +32,7 @@ public class RepairShop {
     }
 
     protected void loadTransport(VolvoVAH300 transport) {
-        if(!carStorage.isEmpty()) {
+        if(!carStorage.isEmpty() && transport.getCargoSize() < VolvoVAH300.loadCapacity) {
             Car newCar = carStorage.removeLast();
             newCar.coordination = transport.coordination;
             transport.addCar(newCar);
@@ -42,8 +42,8 @@ public class RepairShop {
     //TODO För att spelet ska kunna fungera och plocka samt avlasta grejjer...
 
     public boolean isWithinRectangle(Point2D.Double other) {
-        Point2D.Double topLeft = new Point2D.Double(coordination.x, coordination.y);
-        Point2D.Double bottomRight = new Point2D.Double(coordination.x + 100, coordination.y + 50);
+        Point2D.Double topLeft = new Point2D.Double(coordination.x-10, coordination.y-10);
+        Point2D.Double bottomRight = new Point2D.Double(coordination.x + 110, coordination.y + 60);
 
         return other.x >= topLeft.x && other.x <= bottomRight.x &&
                 other.y >= topLeft.y && other.y <= bottomRight.y;

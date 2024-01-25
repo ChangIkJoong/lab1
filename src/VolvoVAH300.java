@@ -7,14 +7,14 @@ public class VolvoVAH300 extends Truck {
     protected final Deque<Car> cargo = new ArrayDeque<>();
 
     protected boolean platform = false;
-    private static final int loadCapacity = 8;
+    protected static final int loadCapacity = 8;
 
     public VolvoVAH300(){
         super("VolvoVAH300",2, Color.GREEN, 200);
     }
 
     @Override
-    protected void increasePlatformAngle() {
+    public void increasePlatformAngle() {
         if(getCurrentSpeed() == 0) {
             setPlatformAngle(70);
             if (getPlatformAngle()==70) {
@@ -24,7 +24,7 @@ public class VolvoVAH300 extends Truck {
 
     }
      @Override
-        protected void decreasePlatformAngle() {
+     public void decreasePlatformAngle() {
             if(getCurrentSpeed() == 0) {
                 setPlatformAngle(0);
                 if (getPlatformAngle()==0) {
@@ -64,14 +64,7 @@ public class VolvoVAH300 extends Truck {
         return x;
     }
 
-    //**FOR TESTING AND GAME
-/*
-    public void getCargoPos() {
-        for(Car c : cargo) {
-            System.out.println("CAR: " + c.modelName +" , POSITION: X :" + String.format("%.1f", c.coordination.x) + ", Y "+ String.format("%.1f", c.coordination.y));
-        }
-    }
-*/
+    //TODO För att spelet ska kunna Testas, fungera och plocka samt avlasta grejjer...
     public int getCargoSize() {
         return cargo.size();
     }
