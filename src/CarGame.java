@@ -34,7 +34,7 @@ public class CarGame extends JPanel implements Runnable{
     //TODO CAR ATTRIBUTE
     VolvoVAH300 car = new VolvoVAH300();
     RepairShop verkstad = new RepairShop("Chalmers", 40,List.of(new String[]{"Volvo240", "Saab95"}), new Point2D.Double(100, 200));
-    RepairShop verkstad2 = new RepairShop("KTH", 40,List.of(new String[]{"Saab95"}), new Point2D.Double(800, 600));
+    RepairShop verkstad2 = new RepairShop("KTH", 40,List.of(new String[]{"Saab95"}), new Point2D.Double(800, 500));
 
     RepairShop verkstad3 = new RepairShop("LTH", 40,List.of(new String[]{"Volvo240"}), new Point2D.Double(1300, 100));
     List<RepairShop> workshopS = new ArrayList<>(List.of(verkstad, verkstad2, verkstad3));
@@ -57,8 +57,8 @@ public class CarGame extends JPanel implements Runnable{
     @Override
     public void run() {
         verkstad.carStorage.addAll(new ArrayList<>(List.of(new Saab95(), new Volvo240(), new Volvo240(), new Saab95(), new Volvo240(), new Volvo240(), new Saab95())));
-        verkstad2.carStorage.addAll(new ArrayList<>(List.of(new Saab95(),new Saab95(), new Saab95(),new Saab95(),new Saab95(), new Saab95())));
-        verkstad3.carStorage.addAll(new ArrayList<>(List.of(new Volvo240(), new Volvo240(),new Volvo240(), new Volvo240())));
+        verkstad2.carStorage.addAll(new ArrayList<>(List.of(new Saab95(),new Saab95(), new Saab95(), new Saab95())));
+        verkstad3.carStorage.addAll(new ArrayList<>(List.of(new Volvo240(), new Volvo240(), new Volvo240(),new Volvo240(), new Volvo240())));
 
 
 
@@ -210,11 +210,6 @@ public class CarGame extends JPanel implements Runnable{
         drawSpeed(g);
         drawPosition(g);
 
-        if(car.getCargoSize() != 0) {
-            drawLoadSize(g);
-            drawLoad(g);
-        }
-
         if(car.getPlatformAngle()!=0) {
             drawPlatform(g);
             drawRamp(g);
@@ -242,7 +237,7 @@ public class CarGame extends JPanel implements Runnable{
         Graphics2D g2 = (Graphics2D)g;
         g2.setColor(Color.BLACK);
         int offset = screenHeight-160;
-        g2.drawString("CARGO: ", 5 , offset);
+        g2.drawString("CARGO: "+ car.getCargoSize(), 5 , offset);
     }
 
     public void drawCarList(Graphics g) {
@@ -322,7 +317,7 @@ public class CarGame extends JPanel implements Runnable{
     public void drawInstructions(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(Color.black);
-        g2.drawString( " Q - RAMP UP : A - RAMP DOWN : N - ADD LOAD : M - REMOVE LOAD : B - View Load in Compiler",screenWidth/2, screenHeight-20);
+        g2.drawString( " Q - RAMP UP : A - RAMP DOWN : N - ADD LOAD : M - REMOVE LOAD" ,screenWidth/2, screenHeight-20);
         //g2.dispose();
     }
 
@@ -334,13 +329,7 @@ public class CarGame extends JPanel implements Runnable{
         //g2.dispose();
     }
 
-    public void drawLoadSize(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g;
 
-        g2.setColor(Color.black);
-        g2.drawString( "LOAD: "+ car.getCargoSize(),20, 65);
-        //g2.dispose();
-    }
 
     public void drawLoad(Graphics g) {
         Graphics2D g2 = (Graphics2D)g;
