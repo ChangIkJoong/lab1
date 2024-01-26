@@ -1,7 +1,6 @@
 import java.awt.*;
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.Stack;
 
 public class VolvoVAH300 extends Truck {
     protected final Deque<Car> cargo = new ArrayDeque<>();

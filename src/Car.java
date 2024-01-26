@@ -1,7 +1,5 @@
 import java.awt.*;
 import java.awt.geom.Point2D;
-import java.util.List;
-import java.util.Stack;
 
 public abstract class Car implements Movable {
     protected int nrDoors; // Number of doors on the car
