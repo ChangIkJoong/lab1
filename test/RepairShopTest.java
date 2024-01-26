@@ -44,7 +44,7 @@ public class RepairShopTest {
     }
 
     @Test
-    public void loadedTransportPosition() {
+    public void loadedTransportPositionValidate() {
         transport.decreasePlatformAngle();
         verkstad.carStorage.add(volvo);
         int cordX= (int) verkstad.carStorage.getLast().coordination.x;
@@ -62,5 +62,12 @@ public class RepairShopTest {
         assertNotEquals(cordX, transport.cargo.peek().coordination.x);
         assert transport.cargo.peek() != null;
         assertNotEquals(cordY, transport.cargo.peek().coordination.y);
+    }
+
+    @Test
+    public void isWithinRadius() {
+        transport.coordination = new Point2D.Double(100,200);
+        verkstad.coordination=new Point2D.Double(100,200);
+        assertTrue(verkstad.isWithinRectangle(transport.coordination));
     }
 }

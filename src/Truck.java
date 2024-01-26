@@ -2,7 +2,7 @@ import java.awt.*;
 
 public abstract class Truck extends Car {
     protected int platformAngle;
-    protected final int increaseAmount = 1;
+    private final int increaseAmount = 1;
 
     public Truck(String model, int nrDoors, Color color, double enginePower) {
         super(model, nrDoors, color, enginePower);
