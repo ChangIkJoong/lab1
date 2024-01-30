@@ -4,7 +4,6 @@ import java.util.Deque;
 
 public class VolvoVAH300 extends Truck {
     protected final Deque<Car> cargo = new ArrayDeque<>();
-
     protected boolean platform = false;
     protected static final int loadCapacity = 8;
 
@@ -16,9 +15,7 @@ public class VolvoVAH300 extends Truck {
     public void increasePlatformAngle() {
         if(getCurrentSpeed() == 0) {
             setPlatformAngle(70);
-            if (getPlatformAngle()==70) {
-                platform = true;
-            }
+            platform = getPlatformAngle() == 70;
         }
 
     }
@@ -26,9 +23,7 @@ public class VolvoVAH300 extends Truck {
      public void decreasePlatformAngle() {
             if(getCurrentSpeed() == 0) {
                 setPlatformAngle(0);
-                if (getPlatformAngle()==0) {
-                    platform = false;
-                }
+                platform = getPlatformAngle() == 70;
             }
         }
 

@@ -12,7 +12,8 @@ public class RepairShopTest {
 
     static VolvoVAH300 transport;
 
-    static RepairShop verkstad;
+    static RepairShop<Car> verkstad;
+    static RepairShop<Volvo240> verkstadVolvo;
 
 
     @Before
@@ -20,54 +21,30 @@ public class RepairShopTest {
         saab = new Saab95();
         volvo = new Volvo240();
         transport = new VolvoVAH300();
-        verkstad = new RepairShop("test", 5, List.of(new String[]{"Volvo240"}), new Point2D.Double(100,200));
+        verkstad = new RepairShop<>(5,new Point2D.Double(100,200));
+        verkstadVolvo = new RepairShop<>( 5, new Point2D.Double(100,200));
     }
 
     @Test
-    public void unloadTransport() {
+    public void addCarWrong() {
+        verkstadVolvo.carStorage.clear();
+        verkstadVolvo.addCar(volvo);
+        //verkstadVolvo.addCar(saab);
+    }
+
+    @Test
+    public void addCar() {
         verkstad.carStorage.clear();
-        transport.addCar(saab);
-        verkstad.unloadTransport(transport);
-        assertFalse(verkstad.carStorage.contains(saab));
-
-
-        transport.addCar(volvo);
-        verkstad.unloadTransport(transport);
-        assertTrue(verkstad.carStorage.contains(volvo));
+        verkstad.addCar(volvo);
+        verkstad.addCar(saab);
+        assertNotEquals(0, verkstad.carStorage.size());
     }
     @Test
-    public void loadTransport() {
-        verkstad.carStorage.add(volvo);
-        verkstad.loadTransport(transport);
+    public void removeCar() {
+        verkstad.addCar(volvo);
+        assertEquals(1, verkstad.carStorage.size());
 
-        assertTrue(transport.getLoadList().contains(volvo));
-    }
-
-    @Test
-    public void loadedTransportPositionValidate() {
-        transport.decreasePlatformAngle();
-        verkstad.carStorage.add(volvo);
-        int cordX= (int) verkstad.carStorage.getLast().coordination.x;
-        int cordY= (int) verkstad.carStorage.getLast().coordination.y;
-
-        verkstad.loadTransport(transport);
-
-        transport.increasePlatformAngle();
-        transport.gas(1);
-        transport.move();
-        transport.turnLeft();
-        transport.move();
-
-        assert transport.cargo.peek() != null;
-        assertNotEquals(cordX, transport.cargo.peek().coordination.x);
-        assert transport.cargo.peek() != null;
-        assertNotEquals(cordY, transport.cargo.peek().coordination.y);
-    }
-
-    @Test
-    public void isWithinRadius() {
-        transport.coordination = new Point2D.Double(100,200);
-        verkstad.coordination=new Point2D.Double(100,200);
-        assertTrue(verkstad.isWithinRectangle(transport.coordination));
+        verkstad.RemoveCar();
+        assertEquals(0, verkstad.carStorage.size());
     }
 }

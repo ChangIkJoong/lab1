@@ -33,10 +33,10 @@ public class CarGame extends JPanel implements Runnable{
 
     //TODO CAR ATTRIBUTE
     VolvoVAH300 car = new VolvoVAH300();
-    RepairShop verkstad = new RepairShop("Chalmers", 40,List.of(new String[]{"Volvo240", "Saab95"}), new Point2D.Double(100, 200));
-    RepairShop verkstad2 = new RepairShop("KTH", 40,List.of(new String[]{"Saab95"}), new Point2D.Double(800, 500));
+    RepairShop<Car> verkstad = new RepairShop<>(10, new Point2D.Double(100, 200));
+    RepairShop<Saab95> verkstad2 = new RepairShop<>(10, new Point2D.Double(800, 500));
 
-    RepairShop verkstad3 = new RepairShop("LTH", 40,List.of(new String[]{"Volvo240"}), new Point2D.Double(1300, 100));
+    RepairShop<Volvo240> verkstad3 = new RepairShop<>(10, new Point2D.Double(1300, 100));
     List<RepairShop> workshopS = new ArrayList<>(List.of(verkstad, verkstad2, verkstad3));
 
 
@@ -94,39 +94,31 @@ public class CarGame extends JPanel implements Runnable{
 
     }
 
-    public void update(){
+    public void update() {
 
-        if(keyH.upPressed) {
+        if (keyH.upPressed) {
             car.gas(0.1);
 
-        }
-        else if(keyH.downPressed) {
+        } else if (keyH.downPressed) {
             car.brake(0.1);
 
-        }
-
-        else if(keyH.leftPressed) {
+        } else if (keyH.leftPressed) {
             car.turnLeft();
-            rotationV-=Math.toRadians(90);
+            rotationV -= Math.toRadians(90);
 
             out.println("left");
             out.println(car.orientation);
-            keyH.leftPressed=false;
-        }
-        else if(keyH.rightPressed) {
+            keyH.leftPressed = false;
+        } else if (keyH.rightPressed) {
             car.turnRight();
-            rotationV+=Math.toRadians(90);
+            rotationV += Math.toRadians(90);
 
             out.println("right");
             out.println(car.orientation);
-            keyH.rightPressed=false;
-        }
-
-        else if(keyH.qPressed) {
+            keyH.rightPressed = false;
+        } else if (keyH.qPressed) {
             car.increasePlatformAngle();
-        }
-
-        else if(keyH.aPressed) {
+        } else if (keyH.aPressed) {
             car.decreasePlatformAngle();
         }
 
@@ -194,7 +186,7 @@ public class CarGame extends JPanel implements Runnable{
         }
 
         for(RepairShop v : workshopS) {
-            drawWorkshopName(g, v);
+            //drawWorkshopName(g, v);
         }
 
 
@@ -257,11 +249,13 @@ public class CarGame extends JPanel implements Runnable{
         Graphics2D g2 = (Graphics2D)g;
         g2.setColor(Color.DARK_GRAY);
         int offset = (int) v.coordination.y +5;
-        for (Car carM : v.carStorage) {
-            g2.drawString(carM.modelName, (int) v.coordination.x-70,offset);
+        for (Car x: v.carStorage) {
+            g2.drawString(x.modelName, (int) v.coordination.x-70,offset);
             offset +=17;
         }
     }
+
+
     public void drawWorkshop(Graphics g, RepairShop v) {
         Graphics2D g2 = (Graphics2D)g;
         g2.setColor(Color.DARK_GRAY);

@@ -20,7 +20,7 @@ public class TransporterTest {
         saab = new Saab95();
         volvo = new Volvo240();
         transport = new VolvoVAH300();
-        verkstad = new RepairShop("hej", 5, List.of(new String[]{"Volvo240", "Saab95"}), new Point2D.Double(100,200));
+        verkstad = new RepairShop<>( 5, new Point2D.Double(100,200));
     }
 
     @Test
@@ -39,7 +39,7 @@ public class TransporterTest {
         int currentAngle = transport.getPlatformAngle();
         transport.increasePlatformAngle();
         assertTrue(transport.getPlatformAngle() > currentAngle);
-        assertEquals(true, transport.platform);
+        assertTrue(transport.platform);
     }
 
     @Test
@@ -47,7 +47,7 @@ public class TransporterTest {
         transport.setPlatformAngle(50);
         int currentAngle = transport.getPlatformAngle();
         transport.decreasePlatformAngle();
-        assertEquals(false, transport.platform);
+        assertFalse(transport.platform);
 
     }
 
@@ -76,8 +76,8 @@ public class TransporterTest {
         transport.turnLeft();
         transport.move();
 
-        assertTrue(cordX == (int) transport.coordination.x);
-        assertTrue(cordY == (int) transport.coordination.y);
+        assertEquals(cordX, (int) transport.coordination.x);
+        assertEquals(cordY, (int) transport.coordination.y);
     }
 
     @Test

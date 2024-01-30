@@ -124,9 +124,6 @@ public class CarTest {
         saab.move();
         assertTrue(saab.coordination.x > noTurboX);
 
-
-
-
     }
 
     @Test
